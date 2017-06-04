@@ -1,0 +1,12 @@
+CREATE TABLE jahhundoUser (
+user_id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+username VARCHAR(30),
+password VARCHAR(100)
+);
+
+CREATE TABLE jahhundoBids (
+bid FLOAT(10, 2) UNSIGNED NOT NULL,
+user_id INT(10) UNSIGNED NOT NULL
+);
+
+INSERT INTO jahhundoUser (username, password) VALUES ('admin', 'admin');

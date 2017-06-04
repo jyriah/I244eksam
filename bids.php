@@ -16,7 +16,7 @@ $user = "test";
 $password = "t3st3r123";
 $dbname = "test";
 
-if(isset($_POST["username"]) && isset($_POST["bid"])) {
+if(isset($_POST["username"]) && isset($_POST["bid"]) && $_POST["username"] !== "" && $_POST["bid"] !== "") {
 	
 	$username = htmlspecialchars($_POST["username"]);
 	$bid = htmlspecialchars($_POST["bid"]);

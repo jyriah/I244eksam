@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <?php
-// kood on osaliselt v�etud: https://www.w3schools.com/php/php_mysql_select.asp
+// kood on osaliselt võetud: https://www.w3schools.com/php/php_mysql_select.asp
 
 $servername = "localhost";
 $user = "test";
@@ -60,45 +60,46 @@ if ($result->num_rows > 0) {
 } else {
     echo "Suurimat pakkumist pole";
 }
+
+// Check connection
+if ($conn->connect_error) {
+	die("Connection failed: " . $conn->connect_error);
+}
+
+// prepare and bind
+$stmt = $conn->prepare("SELECT user_name FROM jahhundoBids WHERE bid=?");
+$stmt->bind_param("s", $max_bid);
+
+
+// execute
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+while($row = $result->fetch_assoc()) {
+	$user_name = $row["user_name"];
+}
+
+$stmt->close();
 $conn->close();
-
-	// Create connection
-	$conn = new mysqli($servername, $user, $password, $dbname);
-	
-	// Check connection
-	if ($conn->connect_error) {
-		die("Connection failed: " . $conn->connect_error);
-	}
-
-	// prepare and bind
-	$stmt = $conn->prepare("SELECT user_name FROM jahhundoBids WHERE bid=?");
-	$stmt->bind_param("s", $max_bid);
-	
-	
-	// execute
-	$stmt->execute();
-	
-	$result = $stmt->get_result();
-	
-	while($row = $result->fetch_assoc()) {
-		$user_name = $row["user_name"];
-	}
-
-	$stmt->close();
-	$conn->close();
 ?>
 <body>
 
 <div class="container">
 <div>
 <form method="post" action="">
-
-<div>Kasutajanimi: <input type="text" name="username"></input></div>
-<div>Pakkumine: <input type="text" name="bid"></input></div>
-<div><button type="submit">Lisa pakkumine</button></div>
+  <div class="form-group">
+    <label for="username">Kasutajanimi: </label>
+    <input type="text" class="form-control" id="username" name="username" placeholder="Sisesta kasutajanimi">
+  </div>
+  <div class="form-group">
+    <label for="username">Pakkumine: </label>
+    <input type="text" class="form-control" id="username" name="bid" placeholder="Sisesta pakkumine">
+  </div>
+  <button type="submit">Lisa pakkumine</button>
 </form>
 </div>
-<h2>Suurima pakkuja andmed: </h2>
+<h2>Kõrgeima pakkuja andmed: </h2>
     <div class="panel panel-default">
         <div class="panel-heading"><strong>Pakkuja kasutajanimi:  <?php echo $user_name?></strong></div>
         <div class="panel-body">Suurim pakkumine: <?php echo $max_bid ?></div>

@@ -9,5 +9,4 @@ INSERT INTO jahhundoBids (bid, user_name) VALUES
 (95.00, 'user')
 ;
 
-SELECT MAX(bid) AS max_bid, user_name 
-FROM jahhundoBids;
+SELECT MAX(bid) AS max_bid, user_name FROM jahhundoBids;

@@ -9,4 +9,16 @@ bid FLOAT(10, 2) UNSIGNED NOT NULL,
 user_id INT(10) UNSIGNED NOT NULL
 );
 
-INSERT INTO jahhundoUser (username, password) VALUES ('admin', 'admin');
+INSERT INTO jahhundoUser (username, password) VALUES 
+('admin', 'admin'),
+('user', 'user')
+;
+
+INSERT INTO jahhundoBids (bid, user_id) VALUES 
+(100.24, 1),
+(95.00, 2)
+;
+
+SELECT MAX(jahhundoBids.bid) AS max_bid, username 
+FROM jahhundoBids
+LEFT JOIN jahhundoUser ON jahhundoBids.user_id = jahhundoUser.user_id;

@@ -9,6 +9,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <?php
+// kood on osaliselt võetud: https://www.w3schools.com/php/php_mysql_select.asp
+
 $servername = "localhost";
 $username = "test";
 $password = "t3st3r123";

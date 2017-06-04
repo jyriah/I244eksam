@@ -40,6 +40,12 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 <body>
+<div>
+<form method="post" action="">
+Kasutajanimi: <input type="text"></input>
+Pakkumine: <input type="text"></input>
+</form>
+</div>
 <div class="container">
 <h2>Suurima pakkuja andmed: </h2>
     <div class="panel panel-default">

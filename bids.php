@@ -12,44 +12,95 @@
 // kood on osaliselt võetud: https://www.w3schools.com/php/php_mysql_select.asp
 
 $servername = "localhost";
-$username = "test";
+$user = "test";
 $password = "t3st3r123";
 $dbname = "test";
 
+if(isset($_POST["username"]) && isset($_POST["bid"])) {
+	
+	$username = htmlspecialchars($_POST["username"]);
+	$bid = htmlspecialchars($_POST["bid"]);
+	
+	// Create connection
+	$conn = new mysqli($servername, $user, $password, $dbname);
+	
+	// Check connection
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+
+	// prepare and bind
+	$stmt = $conn->prepare("INSERT INTO jahhundoBids (bid, user_name) VALUES 
+(?, ?)");
+	$stmt->bind_param("ds", $bid, $username);
+
+	// execute
+	$stmt->execute();
+
+	$stmt->close();
+	$conn->close();
+}
+
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $user, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "SELECT MAX(jahhundoBids.bid) AS max_bid, username 
-FROM jahhundoBids
-LEFT JOIN jahhundoUser ON jahhundoBids.user_id = jahhundoUser.user_id;";
+$sql = "SELECT MAX(bid) AS max_bid
+FROM jahhundoBids";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
 	// output data of each row
     while($row = $result->fetch_assoc()) {
         $max_bid = $row["max_bid"];
-		$username = $row["username"];
     }
 } else {
     echo "Suurimat pakkumist pole";
 }
 $conn->close();
+
+	// Create connection
+	$conn = new mysqli($servername, $user, $password, $dbname);
+	
+	// Check connection
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+
+	// prepare and bind
+	$stmt = $conn->prepare("SELECT user_name FROM jahhundoBids WHERE bid=?");
+	$stmt->bind_param("s", $max_bid);
+	
+	
+	// execute
+	$stmt->execute();
+	
+	$result = $stmt->get_result();
+	
+	while($row = $result->fetch_assoc()) {
+		$user_name = $row["user_name"];
+	}
+
+	$stmt->close();
+	$conn->close();
 ?>
 <body>
+
+<div class="container">
 <div>
 <form method="post" action="">
-Kasutajanimi: <input type="text"></input>
-Pakkumine: <input type="text"></input>
+
+<div>Kasutajanimi: <input type="text" name="username"></input></div>
+<div>Pakkumine: <input type="text" name="bid"></input></div>
+<div><button type="submit">Lisa pakkumine</button></div>
 </form>
 </div>
-<div class="container">
 <h2>Suurima pakkuja andmed: </h2>
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>Pakkuja kasutajanimi:  <?php echo $username?></strong></div>
+        <div class="panel-heading"><strong>Pakkuja kasutajanimi:  <?php echo $user_name?></strong></div>
         <div class="panel-body">Suurim pakkumine: <?php echo $max_bid ?></div>
     </div>
 </div>

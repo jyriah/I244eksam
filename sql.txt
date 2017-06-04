@@ -1,24 +1,13 @@
-CREATE TABLE jahhundoUser (
-user_id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
-username VARCHAR(30),
-password VARCHAR(100)
-);
-
 CREATE TABLE jahhundoBids (
-bid FLOAT(10, 2) UNSIGNED NOT NULL,
-user_id INT(10) UNSIGNED NOT NULL
+user_id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+user_name VARCHAR(50),
+bid FLOAT(10, 2) UNSIGNED NOT NULL
 );
 
-INSERT INTO jahhundoUser (username, password) VALUES 
-('admin', 'admin'),
-('user', 'user')
+INSERT INTO jahhundoBids (bid, user_name) VALUES 
+(100.24, 'admin'),
+(95.00, 'user')
 ;
 
-INSERT INTO jahhundoBids (bid, user_id) VALUES 
-(100.24, 1),
-(95.00, 2)
-;
-
-SELECT MAX(jahhundoBids.bid) AS max_bid, username 
-FROM jahhundoBids
-LEFT JOIN jahhundoUser ON jahhundoBids.user_id = jahhundoUser.user_id;
+SELECT MAX(bid) AS max_bid, user_name 
+FROM jahhundoBids;

@@ -21,28 +21,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "SELECT MAX(bid) AS max_bid, user_id FROM jahhundoBids";
+$sql = "SELECT MAX(jahhundoBids.bid) AS max_bid, username 
+FROM jahhundoBids
+LEFT JOIN jahhundoUser ON jahhundoBids.user_id = jahhundoUser.user_id;";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
 	// output data of each row
     while($row = $result->fetch_assoc()) {
         $max_bid = $row["max_bid"];
-		$max_id = $row["user_id"];
-    }
-} else {
-    echo "Suurimat pakkumist pole";
-}
-$conn->close();
-
-$sql = "SELECT username FROM jahhundoUser WHERE user_id=" . $max_id;
-echo $sql;
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-	// output data of each row
-    while($row = $result->fetch_assoc()) {
-        $user_name = $row["username"];
+		$username = $row["username"];
     }
 } else {
     echo "Suurimat pakkumist pole";
@@ -53,8 +41,8 @@ $conn->close();
 <div class="container">
 <h2>Suurima pakkuja andmed: </h2>
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>Pakkuja kasutajanimi:  <?php echo $max_id ?></strong></div>
-        <div class="panel-body">Suurim pakkumine: <?php echo $user_name?></div>
+        <div class="panel-heading"><strong>Pakkuja kasutajanimi:  <?php echo $username?></strong></div>
+        <div class="panel-body">Suurim pakkumine: <?php echo $max_bid ?></div>
     </div>
 </div>
 

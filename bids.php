@@ -87,14 +87,14 @@ $conn->close();
 
 <div class="container">
 <div>
-<form method="post" action="">
+<form method="post" action="bids.php">
   <div class="form-group">
     <label for="username">Kasutajanimi: </label>
     <input type="text" class="form-control" id="username" name="username" placeholder="Sisesta kasutajanimi">
   </div>
   <div class="form-group">
-    <label for="username">Pakkumine: </label>
-    <input type="text" class="form-control" id="username" name="bid" placeholder="Sisesta pakkumine">
+    <label for="bid">Pakkumine: </label>
+    <input type="text" class="form-control" id="bid" name="bid" placeholder="Sisesta pakkumine">
   </div>
   <button type="submit">Lisa pakkumine</button>
 </form>
